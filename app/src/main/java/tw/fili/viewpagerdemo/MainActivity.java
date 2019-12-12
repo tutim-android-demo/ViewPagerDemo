@@ -8,6 +8,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,8 +32,63 @@ public class MainActivity extends AppCompatActivity {
         rData.add( new SampleItem("名稱3","描述描述描述3", 10000, R.drawable.sample_a3) );
         rData.add( new SampleItem("名稱4","描述4", 1, R.drawable.sample_a4) );
 
+        //顯示第 0 頁的值
+        SampleItem x = rData.get(0);
+
+        ImageView iv;
+        TextView tv1,tv2,tv3;
+        iv = findViewById(R.id.imageView2);
+        tv1 = findViewById(R.id.textView4);
+        tv2 = findViewById(R.id.textView5);
+        tv3 = findViewById(R.id.textView6);
+
+        iv.setImageResource( x.getImage_id() );
+        tv1.setText( x.getName() );
+        tv2.setText( x.getDesc() );
+        tv3.setText( String.valueOf(x.getCount()) );
+
+        //綁定adapter
         ViewPager vp = findViewById(R.id.viewPager);
         vp.setAdapter(new MyViewPagerAdapter());
+
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                SampleItem x = rData.get(position);
+
+                ImageView iv;
+                TextView tv1,tv2,tv3;
+                iv = findViewById(R.id.imageView2);
+                tv1 = findViewById(R.id.textView4);
+                tv2 = findViewById(R.id.textView5);
+                tv3 = findViewById(R.id.textView6);
+
+                iv.setImageResource( x.getImage_id() );
+                tv1.setText( x.getName() );
+                tv2.setText( x.getDesc() );
+                tv3.setText( String.valueOf(x.getCount()) );
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+
+        findViewById(R.id.button2).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ViewPager vp = findViewById(R.id.viewPager);
+                vp.setCurrentItem(2);   // 切換到第 2 頁
+            }
+        });
+
     }
 
 
